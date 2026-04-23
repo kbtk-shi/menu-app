@@ -1,0 +1,250 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>メニュー暗記</title>
+  
+  <link href="http://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@700;900&display=swap" rel="stylesheet">
+
+  <!-- スマホ対応 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    /* 画面全体 */
+    body {
+      text-align: center;
+      font-family: 'Noto Sans JP',sans-serif;
+      margin-top: 0px;
+      margin: 0px;
+    }
+
+    /* タイトル */
+    h1 {
+      margin-top: 0px;
+      margin: 0px;
+      font-size: 30px;
+      font-weight: 900;
+      latter-spacing: 4px;
+      font-family: 'Noto Sans JP',sans-serif;
+      padding: 5px 5px;
+      background: rgb(245, 58, 0);
+    }
+
+    /* セレクト */
+    select {
+      font-size: 18px;
+      padding: 10px;
+      margin: 10px;
+      border: 3px solid black;
+      font-weight: 700;
+    }
+
+    /* ボタン */
+    button {
+      background: black;
+      color: white;
+      font-weight: 700;
+      font-size: 18px;
+      padding: 10px;
+      margin: 10px;
+    }
+
+    button:active {
+      transform: scale(0.95);
+    }
+
+    /* 画像 */
+    img {
+      width: 90%;
+      max-width: 300px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      margin: 0 auto;
+      display: block;
+    }
+
+    /* 答え */
+    #answer {
+      font-size: 22px;
+      margin-top: 0;
+    }
+
+    /* 説明 */
+    #description {
+      font-size: 16px;
+      color: rgb(217, 84, 44);
+      margin-top: 10px;
+    }
+
+    /* 答え・説明表示領域 */
+    #infoBox {
+      background: #ffffff;
+      padding: 15px;
+      margin-top: 0;
+      margin: 0;
+      display: inline-block;
+      border: 2px solid rgb(245, 58, 0);
+    }
+
+  </style>
+</head>
+
+<body>
+
+<h1>メニューを覚えよう！</h1>
+
+<!-- カテゴリ選択 -->
+<select id="categorySelect" onchange="nextQuestion()">
+  <option value="all">全部</option>
+  <option value="フェアメニュー">フェアメニュー</option>
+  <option value="牛たっぷりジューシーマウンテン">牛たっぷりジューシーマウンテン</option>
+  <option value="ステーキ">ステーキ</option>
+  <option value="ごはんどろぼうなランチ">ごはんどろぼうなランチ</option>
+  <option value="粗挽きハンバーグステーキ">粗挽きハンバーグステーキ</option>
+  <option value="ハンバーグ">ハンバーグ</option>
+  <option value="日替わりランチ＜スペシャル（3品盛）＞">日替わりランチ＜スペシャル（3品盛）＞</option>
+  <option value="日替わりランチ＜バリュー（2品盛）＞">日替わりランチ＜バリュー（2品盛）＞</option>
+  <option value="ランチメニュー 17時まで実施！">ランチメニュー 17時まで実施！</option>
+  <option value="セットメニュー">セットメニュー</option>
+  <option value="ライトミール・単品">ライトミール・単品</option>
+  <option value="サイドディッシュ＆サラダ">サイドディッシュ＆サラダ</option>
+  <option value="キッズメニュー">キッズメニュー</option>
+  <option value="デザート">デザート</option>
+  <option value="ドリンク・アルコール">ドリンク・アルコール</option>
+</select>
+
+<br>
+
+<!-- 画像 -->
+<img id="menuImage" src="">
+
+<br>
+
+<!-- ボタン -->
+<button onclick="showAnswer()">答え</button>
+
+<br>
+
+<!-- 答え・説明 -->
+<div id ="infoBox">
+  <div id="answer">ここにメニュー名が表示されるよ</div>
+  <div id="description"></div>
+</div>
+
+<br>
+
+<!-- ボタン -->
+<button onclick="nextQuestion()">次</button>
+
+<script>
+const fairMenu = [
+  { name: "いちご満開 豪華ブーケパフェ", img: "images/フェアメニュー/いちご満開 豪華ブーケパフェ.jpg", category: "フェアメニュー", description: "" },
+  { name: "いちご ア・ラ・モード", img: "images/フェアメニュー/いちご ア・ラ・モード.jpg", category: "フェアメニュー", description: "" },
+  { name: "いちごとベリーのチョコクレープ", img: "images/フェアメニュー/いちごとベリーのチョコクレープ.jpg", category: "フェアメニュー", description: "" },
+  { name: "いちごみるくカップ", img: "images/フェアメニュー/いちごみるくカップ.jpg", category: "フェアメニュー", description: "" }
+];
+
+const juicyMountain = [
+  { name: "①フルマウンテン200②ギューチキマウンテン③スモールマウンテン150", img: "images/牛たっぷりジューシーマウンテン/牛たっぷりジューシーマウンテン.jpg", category: "牛たっぷりジューシーマウンテン", description: "ソース4種（香ばし醤油、にんにく塩、にんにく味噌、おろしポン酢）" }
+];
+
+const steak = [
+  { name: "芳醇牛ハラミステーキ", img: "images/ステーキ/芳醇牛ハラミステーキ.jpg", category: "ステーキ", description: "120g、180g" },
+  { name: "芳醇牛ハラミステーキ80g&どんハンバーグ", img: "images/ステーキ/芳醇牛ハラミステーキ80g&どんハンバーグ.jpg", category: "ステーキ", description: "130g、200g" },
+  { name: "まるごと焼レモンステーキ", img: "images/ステーキ/まるごと焼レモンステーキ.jpg", category: "ステーキ", description: "150g、200g" },
+  { name: "激アツステーキ", img: "images/ステーキ/激アツステーキ.jpg", category: "ステーキ", description: "130g、180g、280g ※肩ロースステーキをレアで焼き上げカットし、熱々の鉄板でご提供。" },
+  { name: "激アツステーキ〈ネギ&ガーリック〉", img: "images/ステーキ/激アツステーキ〈ネギ&ガーリック〉.jpg", category: "ステーキ", description: "130g、180g、280g ※激アツステーキにネギとガーリックをトッピング。熱々の鉄板でご提供。" },
+  { name: "激アツステーキHOT", img: "images/ステーキ/激アツステーキHOT.jpg", category: "ステーキ", description: "130g、180g、280g ※辛旨スパイスをふんだんに使用したクセになる辛さのステーキ。ステーキのどんの激辛ソース「どん辛ソース」付き。" },
+  { name: "激アツステーキ130g+ハーフチキングリル", img: "images/ステーキ/激アツステーキ130g+ハーフチキングリル.jpg", category: "ステーキ", description: "" },
+  { name: "激アツステーキ130g+超粗挽きハンバーグ180g", img: "images/ステーキ/激アツステーキ130g+超粗挽きハンバーグ180g.jpg", category: "ステーキ", description: "どんで今一番人気の「激アツステーキ」と牛肉100％で作った食べるとまるでステーキのようなハンバーグ！" },
+  { name: "激アツステーキ130g+どんハンバーグ（デミグラスソース）", img: "images/ステーキ/激アツステーキ130g+どんハンバーグ（デミグラスソース）.jpg", category: "ステーキ", description: "130g、200g" },
+  { name: "サーロインステーキ", img: "images/ステーキ/サーロインステーキ.jpg", category: "ステーキ", description: "150g、200g、300g ※きめ細かいサシが特徴。脂と赤身のバランスが良い、最高品質の部位。店内でカットしてご提供。" },
+  { name: "カットステーキ", img: "images/ステーキ/カットステーキ.jpg", category: "ステーキ", description: "150g、200g、250g" },
+  { name: "カットステーキ（100g）＆自家製ビーフシチュー", img: "images/ステーキ/カットステーキ（100g）＆自家製ビーフシチュー.jpg", category: "ステーキ", description: "" },
+  { name: "チキングリルステーキ", img: "images/ステーキ/チキングリルステーキ.jpg", category: "ステーキ", description: "" },
+  { name: "旨辛サクサクチキン", img: "images/ステーキ/旨辛サクサクチキン.jpg", category: "ステーキ", description: "" },
+  { name: "チキン&切落しビーフ", img: "images/ステーキ/チキン&切落しビーフ.jpg", category: "ステーキ", description: "" }
+];
+
+const menus = [...fairMenu, ...juicyMountain, ...steak];
+
+//現在のメニュー
+let current;
+//前回のメニュー保持用
+let previous = null;
+
+// 問題出す
+function nextQuestion() {
+
+  const selected = document.getElementById("categorySelect").value;
+
+  //「全部」選択の場合
+  let filtered = menus;
+  if (selected !== "all") {
+    filtered = menus.filter(m => m.category === selected);
+  }
+
+　const img = document.getElementById("menuImage");
+  const a = document.getElementById("answer");
+  const b = document.getElementById("description");
+
+  //データなしの場合
+  if (filtered.length === 0) {
+    //alert("このカテゴリは準備中だよ");
+
+    img.style.display = "none";
+
+    a.textContent = "ここにメニュー名が表示されるよ";
+    b.textContent = "";
+
+    a.style.display = "block";
+    b.style.display = "block";
+
+    current = null;
+    return;
+  }
+
+  let next;
+
+　do {
+    const i = Math.floor(Math.random() * filtered.length);
+    next = filtered[i];
+  } while (filtered.length > 1 && next === previous);
+
+  current = next;
+  previous = next; 
+
+  //データありの場合
+  //const i = Math.floor(Math.random() * filtered.length);
+  //current = filtered[i];
+
+  img.src = current.img;
+  img.style.display = "block";
+
+  a.textContent = "ここにメニュー名が表示されるよ";
+  b.textContent = "";
+
+  a.style.display = "block";
+  b.style.display = "block";
+}
+
+// 答え表示
+function showAnswer() {
+
+  if (!current) return;
+
+  const a = document.getElementById("answer");
+  const b = document.getElementById("description");
+
+  a.textContent = current.name;
+  b.textContent = current.description;
+
+}
+
+// 最初の1問
+nextQuestion();
+
+</script>
+
+</body>
+</html>
+
